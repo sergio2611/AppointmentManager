@@ -115,10 +115,33 @@ public class ApptList extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         dateSelected = dateToCompare;
         ////read data
-        ReadData(dateSelected);
+        //ReadData(dateSelected);
 
+        ////////////////////
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference("appt");
+/*
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Appt.clear();
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    Appointment post = postSnapshot.getValue(Appointment.class);
+                    Appt.add(post);
+                }
+                //adapter.Notify(Appt);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+        ////////////////////
         ////
-
+*/
 
         ///set the recycler view
 
@@ -184,6 +207,7 @@ public class ApptList extends AppCompatActivity {
 
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
             Appointment post = postSnapshot.getValue(Appointment.class);
+               if(post.address.equals("tomorrow"))
                     Appt.add(post);
                 }
                 adapter.Notify(Appt);
