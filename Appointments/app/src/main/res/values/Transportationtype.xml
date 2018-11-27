@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="TransportationType">
+        <item>Bus</item>
+        <item>Car</item>
+    </string-array>
+
+
+    <string-array name="transportationProvider">
+        <item>Palace</item>
+        <item>Uber</item>
+        <item>Lyft</item>
+        <item>STS</item>
+        <item>Family</item>
+        <item>Friends</item>
+    </string-array>
+</resources>
