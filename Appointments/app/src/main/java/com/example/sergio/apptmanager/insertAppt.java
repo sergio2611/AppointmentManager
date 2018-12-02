@@ -61,7 +61,7 @@ public class insertAppt extends AppCompatActivity implements DatePickerDialog.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_insert_appt);
 
-        //Location = (EditText) findViewById(R.id.txtLocation);
+        Location = (EditText) findViewById(R.id.txtLocation);
         Doctor = (EditText) findViewById(R.id.txtDoctor);
         Address = (EditText) findViewById(R.id.txtAddress);
         Wheel = (CheckBox) findViewById(R.id.checkBox);
@@ -74,7 +74,7 @@ public class insertAppt extends AppCompatActivity implements DatePickerDialog.On
 
 
         ///end getting date
-
+/*
         ////autocomplete google.
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
@@ -95,7 +95,7 @@ public class insertAppt extends AppCompatActivity implements DatePickerDialog.On
         });
         ////
 
-
+*/
 
         //the spinners
         TType = (Spinner) findViewById(R.id.spinnerTransportationType);
@@ -158,10 +158,10 @@ public class insertAppt extends AppCompatActivity implements DatePickerDialog.On
 
                 //get all data and create an appointment
 
-                String loc  = LocationName ;//Location.getText().toString();
+                String loc  = Location.getText().toString();//LocationName ;//Location.getText().toString();
                 String doc  = Doctor.getText().toString();
                 String addr = Address.getText().toString();
-                loc = "11552sw 17485";
+               // loc = "11552sw 17485";
                 if(TextUtils.isEmpty(loc)) {
                     Toasty.error(insertAppt.this, "You need to enter Location!", Toast.LENGTH_SHORT, true).show();
 
