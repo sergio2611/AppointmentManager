@@ -29,11 +29,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
@@ -207,8 +210,18 @@ public class ApptList extends AppCompatActivity {
 
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
             Appointment post = postSnapshot.getValue(Appointment.class);
-               if(post.address.equals("tomorrow"))
-                    Appt.add(post);
+            String dat = post.startTime.substring(0,10);
+            DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+                    try {
+                        Date apptdate = format.parse(dat);
+                        Date datselect = format.parse(dateSelected);
+                        if(apptdate.equals(datselect))
+                            Appt.add(post);
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
                 }
                 adapter.Notify(Appt);
             }
