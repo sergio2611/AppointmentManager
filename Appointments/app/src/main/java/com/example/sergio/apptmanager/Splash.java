@@ -32,6 +32,7 @@ public class Splash extends AppCompatActivity {
     private int RC_SIGN_IN = 100;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    static GoogleSignInAccount account;
     EditText pass,username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +112,7 @@ public class Splash extends AppCompatActivity {
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+             account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
             Intent i = new Intent(Splash.this, ApptList.class);

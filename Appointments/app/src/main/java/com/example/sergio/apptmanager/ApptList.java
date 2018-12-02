@@ -14,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,7 +57,7 @@ public class ApptList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appt_list);
 
-        this.setTitle("Appointment Manager");
+        this.setTitle(Splash.account.getDisplayName());
         ///LOAD ALL APPOINTMENTS
         Appt = new ArrayList<Appointment>();
 
@@ -97,8 +99,8 @@ public class ApptList extends AppCompatActivity {
                 //String strDate = sdf.format(date.toString());
 
                 refreshAdapter(dateSelected);
-                if(Appt.size() == 0)
-                    Toasty.success(ApptList.this, "No Appointments for this day, Please insert one" , Toast.LENGTH_SHORT, true).show();
+               // if(Appt.size() == 0)
+                //    Toasty.success(ApptList.this, "No Appointments for this day, Please insert one" , Toast.LENGTH_SHORT, true).show();
             }
         });
 
