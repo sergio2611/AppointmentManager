@@ -159,6 +159,47 @@ public class ApptList extends AppCompatActivity {
         adapter = new MyAdapter(Appt, this);
         //we have the adapter
         recyclerView.setAdapter(adapter);
+
+        SwipeableRecyclerViewTouchListener swipeTouchListener =
+                new SwipeableRecyclerViewTouchListener(recyclerView,
+                        new SwipeableRecyclerViewTouchListener.SwipeListener() {
+
+
+                            @Override
+                            public boolean canSwipeLeft(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public boolean canSwipeRight(int position) {
+                                return false;
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    //mItems.remove(position);
+                                    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference ref = database.getReference("appt");
+                                    String tok = Appt.get(position).appId;
+                                    ref.child(tok).removeValue();
+                                    Appt.clear();
+                                    //refreshAdapter(dateSelected);
+                                    //adapter.notifyItemRemoved(position);
+                                }
+                               // adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    //mItems.remove(position);
+                                   // adapter.notifyItemRemoved(position);
+                                }
+                                //adapter.notifyDataSetChanged();
+                            }
+                        });
+        recyclerView.addOnItemTouchListener(swipeTouchListener);
     }
 
 
@@ -213,12 +254,15 @@ public class ApptList extends AppCompatActivity {
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
             Appointment post = postSnapshot.getValue(Appointment.class);
             String dat = post.startTime.substring(0,10);
+           // Appt.clear();
             DateFormat format = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
                     try {
                         Date apptdate = format.parse(dat);
                         Date datselect = format.parse(dateSelected);
-                        if(apptdate.equals(datselect))
-                            Appt.add(post);
+                        if(apptdate.equals(datselect)) {
+                            if(!checkIfExists(post.appId))
+                                Appt.add(post);
+                        }
 
                     } catch (ParseException e) {
                         e.printStackTrace();
@@ -271,6 +315,16 @@ public class ApptList extends AppCompatActivity {
         }*/
     }
 
+
+    public Boolean checkIfExists(String Token)
+    {
+        Boolean exist = false;
+        for (Appointment p : Appt) {
+            if(p.appId.equals(Token))
+            exist = true;
+        }
+        return exist;
+    }
     public void refreshAdapter(String Date)
     {
 
